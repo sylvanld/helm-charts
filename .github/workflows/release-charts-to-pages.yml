@@ -30,6 +30,8 @@ jobs:
         run: |
           curl -o /tmp/helm.tar.gz https://get.helm.sh/helm-v3.15.1-linux-amd64.tar.gz
           mkdir -p ~/.local/apps/helm/
+          mkdir -p ~/.local/bin
+          echo $PATH
           tar -xzvf /tmp/helm.tar.gz --strip-components=1 -C ~/.local/apps/helm/
           chmod u+x ~/.local/apps/helm/helm
           ln -s ~/.local/apps/helm/helm ~/.local/bin/helm
