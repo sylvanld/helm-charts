@@ -22,12 +22,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version: "3.10"
+      - name: Build charts documentation
+        run: |
+          pip install -r requirements.txt
+          mkdocs build --site-dir html-doc/
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'html-doc/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
