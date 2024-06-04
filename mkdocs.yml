@@ -1,0 +1,19 @@
+site_name: Sylvan Helm Charts
+repo_name: sylvanld/helm-charts
+repo_url: https://github.com/sylvanld/helm-charts
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: green
+  features:
+    - content.code.copy
+    - navigation.expand
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
