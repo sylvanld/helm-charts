@@ -28,9 +28,9 @@ jobs:
           python-version: "3.10"
       - name: Setup Helm
         run: |
-          curl -o helm https://get.helm.sh/helm-v3.15.1-linux-amd64.tar.gz /tmp/helm.tar.gz
+          curl -o /tmp/helm.tar.gz https://get.helm.sh/helm-v3.15.1-linux-amd64.tar.gz
           mkdir -p ~/.local/apps/helm/
-          tar -xzvf helm.tar.gz --strip-components=1 -C ~/.local/apps/helm/
+          tar -xzvf /tmp/helm.tar.gz --strip-components=1 -C ~/.local/apps/helm/
           chmod u+x ~/.local/apps/helm/helm
           ln -s ~/.local/apps/helm/helm ~/.local/bin/helm
       - name: Setup Pages
