@@ -49,7 +49,7 @@ jobs:
 
       - name: Publish Chart To Charts Registry
         run: |
-          CHART_NAME=$(cat chart-project/${{ inputs.chart_path }}/Chart.yaml | grep "name:" | cut -d" " -f 2
+          CHART_NAME=$(cat chart-project/${{ inputs.chart_path }}/Chart.yaml | grep "name:" | cut -d" " -f 2)
 
           git config --global user.email 'action@github.com'
           git config --global user.name 'Gitub Action'
