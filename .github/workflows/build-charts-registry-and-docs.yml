@@ -1,4 +1,4 @@
-name: Release helm charts to Pages
+name: Build Charts Registry And Docs
 
 on:
   push:
