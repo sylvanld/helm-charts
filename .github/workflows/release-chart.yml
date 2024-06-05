@@ -1,0 +1,61 @@
+name: "Release Helm Chart"
+
+on:
+  # workflow_call:
+  workflow_dispatch:
+    inputs:
+      repository:
+        type: string
+        required: true
+      branch_ref:
+        type: string
+        required: true
+      chart_path:
+        type: string
+        required: true
+        description: "Path to helm chart in project without trailing /"
+      chart_version:
+        type: string
+        required: true
+        description: "Version of the chart to be released"
+
+jobs:
+  build-and-release-chart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Charts Registry Repository
+        uses: actions/checkout@v4.1.5
+        with:
+          path: charts-registry
+
+      - name: Checkout Chart Project Repository
+        uses: actions/checkout@v4.1.5
+        with:
+          repository: "${{ inputs.repository }}"
+          ref: "${{ inputs.branch_ref }}"
+          path: chart-project
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+         version: 'v3.9.2'
+
+      - name: Package Helm Chart
+        run: |
+          helm package                                   \
+            --version "${{ inputs.chart_version }}"      \
+            --destination "charts-registry/charts"       \
+            "chart-project/${{ inputs.chart_path }}"
+
+      - name: Publish Chart To Charts Registry
+        run: |
+          CHART_NAME=$(cat chart-project/${{ inputs.chart_path }}/Chart.yaml | grep "name:" | cut -d" " -f 2
+
+          git config --global user.email 'action@github.com'
+          git config --global user.name 'Gitub Action'
+
+          cd charts-registry
+          git add charts/
+          git commit -m "Release version ${{ inputs.chart_version }} of chart $CHART_NAME"
+          git push
+
